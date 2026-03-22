@@ -2,7 +2,7 @@ name: lifestream_doctor
 description: >-
   Crash reporting SDK for Lifestream Vault — captures exceptions and
   uploads reports as searchable Markdown documents.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/lifestreamdynamics/lifestream-vault-doctor-dart
 issue_tracker: https://github.com/lifestreamdynamics/lifestream-vault-doctor-dart/issues
 
