@@ -1,3 +1,11 @@
+## 1.0.1
+
+- Fix YAML frontmatter quoting for special scalars (`true`, `false`, `null`, numeric strings)
+- Fix `flushQueue` to honor `setConsentPreVerified()` for queue flushing
+- Fix `CrashQueue._load()` to handle malformed JSON entries without crashing
+- Add `close()` method for HTTP client lifecycle management
+- Add device context adapter tests
+
 ## 1.0.0
 
 - Initial release — Dart port of `@lifestreamdynamics/doctor`
