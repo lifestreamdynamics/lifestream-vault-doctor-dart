@@ -4,6 +4,8 @@ Crash reporting SDK for Lifestream Vault — captures exceptions and uploads the
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
+> **Getting started?** Follow the [Crash Reporting with Doctor SDKs](https://vault.lifestreamdynamics.com/docs/guides/crash-reporting-with-doctor) user guide for a step-by-step walkthrough covering setup, consent, Flutter error hooks, and crash triage with the kanban board and calendar timeline.
+
 Dart port of [`@lifestreamdynamics/doctor`](https://github.com/lifestreamdynamics/lifestream-vault-doctor) — produces format-compatible reports and uses the same HMAC-SHA256 signing protocol.
 
 ## Table of Contents
