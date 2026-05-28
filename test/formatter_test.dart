@@ -247,6 +247,10 @@ void main() {
         expect(output, contains('- **platform**: ios'));
         expect(output, contains('- **osVersion**: 17.4'));
         expect(output, contains('- **appVersion**: 2.1.0'));
+        // Unset named fields render as _unknown_ (TS parity)
+        expect(output, contains('- **deviceName**: _unknown_'));
+        expect(output, contains('- **timezone**: _unknown_'));
+        expect(output, contains('- **locale**: _unknown_'));
       });
 
       test('empty device context shows no context message', () {
@@ -266,15 +270,32 @@ void main() {
         expect(output, contains('- **platform**: android'));
         expect(output, contains('- **screenDensity**: 2.0'));
         expect(output, contains('- **ram**: 4GB'));
+        // Unset named fields still render as _unknown_ ahead of extras
+        expect(output, contains('- **osVersion**: _unknown_'));
       });
 
-      test('only extras when named fields are null', () {
+      test('named fields render as _unknown_ alongside extras', () {
         final output = formatReport(makeReport(
           device: const DeviceContext(extras: {'custom': 'value'}),
         ));
-        // Named fields are null so only extras appear
-        expect(output, isNot(contains('- **platform**')));
+        // Matches TS canonical: all named fields appear, null renders as _unknown_
+        expect(output, contains('- **platform**: _unknown_'));
         expect(output, contains('- **custom**: value'));
+        expect(output, isNot(contains('_No device context available._')));
+      });
+
+      test('all unset named fields render as _unknown_ (TS parity)', () {
+        // Only platform is set; the other five named fields must appear
+        // as _unknown_ lines, matching the TS Object.entries() behavior.
+        final output = formatReport(makeReport(
+          device: const DeviceContext(platform: 'ios'),
+        ));
+        expect(output, contains('- **platform**: ios'));
+        expect(output, contains('- **osVersion**: _unknown_'));
+        expect(output, contains('- **deviceName**: _unknown_'));
+        expect(output, contains('- **appVersion**: _unknown_'));
+        expect(output, contains('- **timezone**: _unknown_'));
+        expect(output, contains('- **locale**: _unknown_'));
         expect(output, isNot(contains('_No device context available._')));
       });
     });

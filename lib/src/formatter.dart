@@ -63,34 +63,6 @@ bool _isYamlSpecialScalar(String value) {
   return false;
 }
 
-/// Builds a list of [MapEntry]s representing device context fields that
-/// have non-null values (from named fields) plus all extras, matching the
-/// behavior of `Object.entries()` in TypeScript where only defined
-/// properties appear.
-List<MapEntry<String, Object?>> _deviceEntries(DeviceContext device) {
-  final entries = <MapEntry<String, Object?>>[];
-  if (device.platform != null) {
-    entries.add(MapEntry('platform', device.platform));
-  }
-  if (device.osVersion != null) {
-    entries.add(MapEntry('osVersion', device.osVersion));
-  }
-  if (device.deviceName != null) {
-    entries.add(MapEntry('deviceName', device.deviceName));
-  }
-  if (device.appVersion != null) {
-    entries.add(MapEntry('appVersion', device.appVersion));
-  }
-  if (device.timezone != null) {
-    entries.add(MapEntry('timezone', device.timezone));
-  }
-  if (device.locale != null) {
-    entries.add(MapEntry('locale', device.locale));
-  }
-  entries.addAll(device.extras.entries);
-  return entries;
-}
-
 /// Formats a [CrashReport] as a Markdown document with YAML frontmatter.
 ///
 /// The output contains:
@@ -177,11 +149,10 @@ String formatReport(CrashReport report) {
   // --- Device Context ---
   lines.add('## Device Context');
   lines.add('');
-  final deviceEntries = _deviceEntries(report.device);
-  if (deviceEntries.isEmpty) {
+  if (report.device.isEmpty) {
     lines.add('_No device context available._');
   } else {
-    for (final entry in deviceEntries) {
+    for (final entry in report.device.allEntries) {
       final displayValue = entry.value == null ? '_unknown_' : '${entry.value}';
       lines.add('- **${entry.key}**: $displayValue');
     }
